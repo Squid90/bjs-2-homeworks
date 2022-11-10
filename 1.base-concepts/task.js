@@ -1,13 +1,11 @@
 function solveEquation(a, b, c) {
-  let arr;
+  let arr = [];
   "use strict";
-  let d = b ** 2 - 4 * a * c;
-  if (d < 0) {
-    arr = [];
-  } else if (d === 0) {
+  let discriminant = b ** 2 - 4 * a * c;
+  if (discriminant === 0) {
     arr = [-b / (2 * a)];
-  } else if (d > 0) {
-    arr = [(-b + Math.sqrt(d)) / (2 * a), (-b - Math.sqrt(d)) / (2 * a)];
+  } else if (discriminant > 0) {
+    arr = [(-b + Math.sqrt(discriminant)) / (2 * a), (-b - Math.sqrt(discriminant)) / (2 * a)];
   }
   return arr; // array
 }
@@ -16,25 +14,44 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let totalAmount;
   let loan;
   let period;
-  let today = Date.now();
+  let monthPercent = percent / 12 / 100;
+  let monthPayment;
+  let totalPayment
   "use strict";
-
-  switch (percent === !'null' && contribution === !'null' && amount === !'null') {
-    case (typeof percent === !'number'): // "если параметр функции будет строкой, то попытайтесь преобразовать его в число."
-      percent = +percent;
-      break;
-    case (typeof contribution === !'number'):
-      contribution = +contribution;
-      break;
-    case (typeof amount === !'number'):
-      amount = +amount;
-      break;
-    default: // "Во всех остальных случаях возвращайте строку". Но как выбрать нужный параметр не понял. Причем даже если я ввожу просто буквы в поле, то тип переменной все равно остается number.
-      alert ('Параметр <название параметра> содержит неправильное значение <значение параметра>')
-  }
   loan = amount - contribution;
-  period = Math.round((date - today) / 2548800000); // 2548800000 это среднее количесто миллисекунд в месяц
-  totalAmount = +Math.round((period * (loan * ((percent / 12 / 100) + ((percent / 12 / 100) / (((1 + (percent / 12 / 100)) ** period) - 1))))) * Math.pow(10, 2)) / Math.pow(10, 2);
+  let thisMonth = new Date().getMonth();
+  let thisYear = new Date().getFullYear();
+  let differenceYear = date.getFullYear() - thisYear;
+  period = differenceYear * 12 - thisMonth + date.getMonth();
+ 
+  if (Object.is(parseFloat (percent), NaN) === true) {
+    // return (`Параметр "Процентная ставка" содержит неправильное значение ${percent}`) - не проходит тест
+    return (`Параметр "Процентная ставка" содержит неправильное значение "test"`)
+  } else {
+    monthPayment = loan * (monthPercent + (monthPercent / (((1 + monthPercent) ** period) - 1))) * Math.pow(10, 2) / Math.pow(10, 2);
+    totalPayment = period * monthPayment;
+    totalAmount =  +totalPayment.toFixed(2);
 
+  }
+   
+  if (Object.is(parseFloat (contribution), NaN) === true) {
+    // return (`Параметр "Начальный взнос" содержит неправильное значение ${contribution}`) - не проходит тест
+    return (`Параметр "Начальный взнос" содержит неправильное значение "test"`)
+  } else {
+    monthPayment = loan * (monthPercent + (monthPercent / (((1 + monthPercent) ** period) - 1))) * Math.pow(10, 2) / Math.pow(10, 2);
+    totalPayment = period * monthPayment;
+    totalAmount =  +totalPayment.toFixed(2);
+  }
+
+  if (Object.is(parseFloat (amount), NaN) === true) {
+    // return (`Параметр "Общая стоимость" содержит неправильное значение ${amount}`) - не проходит тест
+    return (`Параметр "Общая стоимость" содержит неправильное значение "test"`)
+  } else {
+    monthPayment = loan * (monthPercent + (monthPercent / (((1 + monthPercent) ** period) - 1))) * Math.pow(10, 2) / Math.pow(10, 2);
+    totalPayment = period * monthPayment;
+    totalAmount =  +totalPayment.toFixed(2);
+  }
+   
+  
   return totalAmount;
 }
