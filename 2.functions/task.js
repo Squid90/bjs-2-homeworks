@@ -5,7 +5,7 @@ function getArrayParams(arr) {
   max = arr[0];
   sum = 0;
 
-  for (i = 0; i < arr.length; i += 1) {
+  for (let i = 0; i < arr.length; i += 1) {
     if (arr[i] > max) {
       max = arr[i];
     }
@@ -31,13 +31,12 @@ function worker(arr) {
   return sum;
 }
 
-function makeWork(arrOfArr, worker2) {
+function makeWork(arrOfArr, func) {
   let max = 0
-  let sum;
   for (let i = 0; i < arrOfArr.length; i += 1) {
-    sum = worker2(arrOfArr[i]);
-    if (max < sum) {
-      max = sum;
+    let result = func(arrOfArr[i]);
+    if (max < result) {
+      max = result;
     }
   }
   
@@ -58,7 +57,5 @@ function worker2(arr) {
       min = arr[i];
     }
   }
-  difference = Math.abs(max - min);
-
-  return difference;
+  return difference = Math.abs(max - min);
 }
