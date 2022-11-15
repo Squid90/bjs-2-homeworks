@@ -57,5 +57,5 @@ function worker2(arr) {
       min = arr[i];
     }
   }
-  return difference = Math.abs(max - min);
+  return Math.abs(max - min);
 }
