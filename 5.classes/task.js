@@ -108,33 +108,32 @@ class Student {
     this.subject = subjectName;
   }
 
-  addMark (mark) {
-    if(this.marks === undefined){ 
-      this.marks = [mark]; 
-    } else {
-      this.marks.push(mark); 
-    }
-  }
-
-  addMarks (...mark) {
-    if(this.marks === undefined){ 
-      this.marks = Object.assign(mark); 
-    } else {
-      this.marks.push(...mark); 
-    }
-  }
-
   getAverage() {
-    let sum = this.marks.reduce((previous, current) => previous += current, 0);
-    return sum / this.marks.length;
+    let sum = 0;
+    let count = 0;
+    const arr = this.marks;
+    Object.keys(arr).forEach(function(key){
+        sum += arr[key].reduce((previous, current) => previous += current, 0);
+        count += arr[key].length;
+    });
+    return sum / count;
   }
 
-  getAverageBySubject() {
-    //еще в раздумьях...
+  getAverageBySubject(subject) {
+    let sum = this.marks.subject.reduce((previous, current) => previous += current, 0);
+    return sum / this.marks.subject.length;
   }
 
-  addMarkToSubject (mark, subject) {
-    //еще в раздумьях...
+  addMark (mark, subject) {
+    if (mark > 5 && mark < 1){
+        console.log('Ошибка, оценка должна быть числом от 1 до 5')
+    } else {
+        if(this.marks === undefined){ 
+            this.marks = {subject: [mark]}; 
+        } else {
+            this.marks.subject.push(mark); 
+        }
+    }
   }
 
   exclude (reason) {
