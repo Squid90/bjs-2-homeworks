@@ -15,43 +15,43 @@ function validateCount (number) {
 }
 
 class Triangle {
-    constructor(cathet1, cathet2, hypotenuse) {
-        this.cathet1 = cathet1;
-        this.cathet2 = cathet2;
-        this.hypotenuse = hypotenuse;
-    }
+    constructor(side1, side2, side3) {
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
 
-    checkTriangle() {
-       if(this.cathet1 + this.cathet2 < this.hypotenuse) {
-        throw new Error("Такого треугольника не существует");
-       }     
+        if(this.side1 + this.side2 < this.side3 || this.side2 + this.side3 < this.side1 || this.side1 + this.side3 < this.side2) {
+            throw new Error("Треугольник с такими сторонами не существует");
+        };
     }
-
-    validateTriangle() {
-        try {
-            return checkTriangle();
-        } catch (error) {
-            return error;
-        }
-    }
-
+    
     getPerimeter() {
-        let perimetr = this.cathet1 + this.cathet2 + this.hypotenuse;
-        return +perimetr.toFixed(3);
+        return this.side1 + this.side2 + this.side3;
     }
 
     getArea() {
         let semiPerimetr = this.getPerimeter() / 2;
-        let area = Math.sqrt(semiPerimetr * (semiPerimetr - this.cathet1) * (semiPerimetr - this.cathet2) * (semiPerimetr - this.hypotenuse));
+        let area = Math.sqrt(semiPerimetr * (semiPerimetr - this.side1) * (semiPerimetr - this.side2) * (semiPerimetr - this.side3));
         return +area.toFixed(3);
     }
 }
 
-function getTriangle (cathet1, cathet2, hypotenuse) {
+
+function getTriangle (side1, side2, side3) {
+
+    const triangle = {
+        getArea() { 
+            return 'Ошибка! Треугольник не существует';
+        },
+        getPerimeter() { 
+            return 'Ошибка! Треугольник не существует';
+        }
+    };
+
+
     try {
-         return new Triangle (cathet1, cathet2, hypotenuse);
+        return new Triangle(side1, side2, side3);
     } catch (error) {
-        
-        throw new Error("Ошибка! Треугольник не существует");
+        return triangle;
     }
 }
